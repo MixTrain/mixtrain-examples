@@ -19,6 +19,12 @@ mixtrain workflow create hello_workflow.py --name hello-workflow
 mixtrain workflow run hello-workflow
 ```
 
+Logs are streamed to the CLI and also available on the UI. The run URL will be printed on the CLI:
+
+```
+https://app.mixtrain.ai/<workspace>/workflows/hello-workflow/runs/1
+```
+
 ## Learn more
 
 - [Workflows guide](https://mixtrain.ai/docs/guide/workflows)
