@@ -16,6 +16,7 @@ cd mixtrain-examples
 | Example | Description | Level | Tags |
 |---|---|---|---|
 | [`hello-workflow`](hello-workflow/) | Run a GPU workflow and check CUDA availability | Intro | `workflow` |
+| [`parameter-sweep`](parameter-sweep/) | Launch multiple runs of another workflow by sweeping one numeric input | Intermediate | `workflow`, `orchestration` |
 | [`yolo-object-detection`](yolo-object-detection/) | Run YOLO11 object detection on images | Intermediate | `vision`, `image`, `docker-image` |
 | [`yolo-video-tracking`](yolo-video-tracking/) | Run YOLO11 object tracking on videos | Intermediate | `vision`, `video`, `Dockerfile` |
 
