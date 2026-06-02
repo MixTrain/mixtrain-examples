@@ -3,7 +3,7 @@
 from decimal import Decimal
 from typing import TypedDict
 
-from mixtrain import MixFlow, Workflow
+from mixtrain import Markdown, MixFlow, Workflow
 
 
 class SweepRun(TypedDict):
@@ -13,6 +13,7 @@ class SweepRun(TypedDict):
 
 
 class ParameterSweepOutput(TypedDict):
+    notes: Markdown
     runs: list[Workflow]
     sweep: list[SweepRun]
     count: int
@@ -33,6 +34,7 @@ class ParameterSweepWorkflow(MixFlow):
         step: float,
         base_inputs: dict | None = None,
         sandbox: dict | None = None,
+        notes: Markdown = "",
         max_runs: int = 100,
     ) -> ParameterSweepOutput:
         """Submit one target workflow run per generated sweep value.
@@ -45,6 +47,7 @@ class ParameterSweepWorkflow(MixFlow):
             step: Increment between values
             base_inputs: Inputs to pass through to every child run
             sandbox: Optional sandbox overrides for every child run
+            notes: Markdown notes to include with the sweep results
             max_runs: Safety cap for the number of child runs
         """
         if step == 0:
@@ -97,7 +100,40 @@ class ParameterSweepWorkflow(MixFlow):
             )
             runs.append(Workflow(target_workflow.name, run_number=run_number))
 
-        return {"runs": runs, "sweep": sweep, "count": len(runs)}
+        return {
+            "notes": Markdown(
+                content=self._build_notes(
+                    notes=notes,
+                    target_workflow=target_workflow.name,
+                    sweep_param=sweep_param,
+                    values=values,
+                    run_numbers=[item["run_number"] for item in sweep],
+                )
+            ),
+            "runs": runs,
+            "sweep": sweep,
+            "count": len(runs),
+        }
+
+    @staticmethod
+    def _build_notes(
+        notes: Markdown | str,
+        target_workflow: str,
+        sweep_param: str,
+        values: list[int | float],
+        run_numbers: list[int],
+    ) -> str:
+        user_notes = notes.content if isinstance(notes, Markdown) else str(notes or "")
+        value_list = ", ".join(str(value) for value in values)
+        run_list = ", ".join(f"#{run_number}" for run_number in run_numbers)
+        summary = (
+            f"## Parameter sweep\n\n"
+            f"- **Target workflow:** `{target_workflow}`\n"
+            f"- **Swept input:** `{sweep_param}`\n"
+            f"- **Values:** {value_list}\n"
+            f"- **Submitted runs:** {run_list}"
+        )
+        return f"{user_notes.strip()}\n\n{summary}" if user_notes.strip() else summary
 
     @staticmethod
     def _build_sweep_values(

@@ -33,7 +33,8 @@ mixtrain workflow run parameter-sweep \
     "step": 0.0001,
     "base_inputs": {
       "epochs": 3
-    }
+    },
+    "notes": "Trying a learning-rate sweep before a longer training run."
   }'
 ```
 
@@ -45,6 +46,7 @@ The sweep values are inclusive of `stop`. For example, `start=1`, `stop=5`, and 
 
 The workflow returns:
 
+- `notes`: a Markdown summary of the sweep, including any notes you provided
 - `runs`: links to the workflow runs it submitted
 - `sweep`: the generated values and run numbers
 - `count`: the number of submitted runs
