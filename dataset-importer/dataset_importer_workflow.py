@@ -15,7 +15,7 @@ Example runs:
 
 """
 
-from mixtrain import MixFlow, Dataset
+from mixtrain import MixFlow, Dataset, validate_resource_name
 
 
 class DatasetImporter(MixFlow):
@@ -31,8 +31,7 @@ class DatasetImporter(MixFlow):
         overwrite: bool = False,
     ) -> Dataset:
         """Run the import."""
-        from mixtrain import Dataset, validate_resource_name
-        from .utils import column_types_for_save
+        from utils import column_types_for_save
 
         validate_resource_name(target_name, "dataset")
 
