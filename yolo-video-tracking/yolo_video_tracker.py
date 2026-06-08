@@ -12,7 +12,7 @@ import uuid
 from datetime import UTC, datetime
 from typing import Literal
 
-from mixtrain import JSON, Files, MixModel, Sandbox, Video
+from mixtrain import File, JSON, MixModel, Sandbox, Video
 
 
 class YOLOVideoTracker(MixModel):
@@ -32,7 +32,6 @@ class YOLOVideoTracker(MixModel):
         from ultralytics import YOLO
 
         self.model = YOLO(f"{model_name}.pt")
-        self.files = Files()
 
     def run(
         self,
@@ -163,10 +162,8 @@ class YOLOVideoTracker(MixModel):
                 output_video_path = mp4_path
 
             # Upload annotated video to cloud storage
-            video_info = self.files.upload(
-                output_video_path,
-                f"{base_path}/annotated_video.mp4",
-                content_type="video/mp4",
+            annotated_video = Video.from_file(output_video_path).save(
+                f"{base_path}/annotated_video.mp4"
             )
 
             # Upload tracking JSON to cloud storage
@@ -174,14 +171,13 @@ class YOLOVideoTracker(MixModel):
             with open(json_path, "w") as f:
                 json.dump(tracking_data, f, indent=2)
 
-            results_info = self.files.upload(
+            results_info = File.from_file(
                 json_path,
-                f"{base_path}/tracking_data.json",
                 content_type="application/json",
-            )
+            ).save(f"{base_path}/tracking_data.json")
 
             return {
-                "annotated_video": Video(url=video_info.url),
+                "annotated_video": annotated_video,
                 "tracking_data": JSON(data=tracking_data),
                 "track_count": len(all_track_ids),
                 "frame_count": len(tracking_frames),

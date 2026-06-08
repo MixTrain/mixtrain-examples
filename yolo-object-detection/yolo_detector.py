@@ -1,14 +1,13 @@
 """YOLO11 Object Detection Model Example."""
 
 import json
-import mimetypes
 import os
 import tempfile
 import uuid
 from datetime import UTC, datetime
 from typing import Literal
 
-from mixtrain import JSON, Files, Image, MixModel, Sandbox
+from mixtrain import File, JSON, Image, MixModel, Sandbox
 
 
 class YOLODetector(MixModel):
@@ -30,7 +29,6 @@ class YOLODetector(MixModel):
         from ultralytics import YOLO
 
         self.model = YOLO(f"{model_name}.pt")
-        self.files = Files()
 
     def run(
         self,
@@ -86,12 +84,7 @@ class YOLODetector(MixModel):
         result.save(local_output)
 
         # Upload annotated image to cloud storage
-        output_content_type = mimetypes.guess_type(local_output)[0] or "image/jpeg"
-        img_info = self.files.upload(
-            local_output,
-            f"{base_path}/annotated{ext}",
-            content_type=output_content_type,
-        )
+        annotated_image = Image.from_file(local_output).save(f"{base_path}/annotated{ext}")
 
         # Upload detection results JSON
         with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
@@ -107,14 +100,13 @@ class YOLODetector(MixModel):
             )
             results_json_path = f.name
 
-        results_info = self.files.upload(
+        results_info = File.from_file(
             results_json_path,
-            f"{base_path}/results.json",
             content_type="application/json",
-        )
+        ).save(f"{base_path}/results.json")
 
         return {
-            "annotated_image": Image(url=img_info.url),
+            "annotated_image": annotated_image,
             "detections": JSON(data=detections),
             "detection_count": len(detections),
             "results_url": results_info.url,
