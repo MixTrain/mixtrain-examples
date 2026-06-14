@@ -31,8 +31,6 @@ class DatasetImporter(MixFlow):
         overwrite: bool = False,
     ) -> Dataset:
         """Run the import."""
-        from utils import column_types_for_save
-
         validate_resource_name(target_name, "dataset")
 
         if Dataset.exists(target_name):
@@ -47,18 +45,18 @@ class DatasetImporter(MixFlow):
 
         print(f"Loading {hf_dataset} split={split} from Hugging Face")
 
-        ds = Dataset.from_huggingface(hf_dataset, split=split, name=hf_dataset)
+        ds = Dataset.from_huggingface(hf_dataset, split=split)
         # Apply dataset transforms here if needed, for example ds.select(...),
         # ds.filter(...), or ds.map(...).
-
-        if column_types != "auto":
-            column_types = column_types_for_save(column_types)
 
         source = f"hf://{hf_dataset} split={split}"
         dataset_description = description or f"Imported from {source}"
 
         print(f"Saving as dataset {target_name}")
 
+        # save() infers column types from a sample
+        # ("auto") or applies the explicit {column: type} overrides, uploads any
+        # referenced files into managed storage, and writes the dataset.
         ds.save(
             name=target_name,
             description=dataset_description,
