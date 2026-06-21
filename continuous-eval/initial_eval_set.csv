@@ -1,0 +1,11 @@
+image,question,ground_truth
+images/cat.jpg,What animal is shown?,cat
+images/dog.jpg,What animal is shown?,dog
+images/mountain.jpg,What terrain dominates the background?,mountains
+images/car.jpg,What type of vehicle is shown?,car
+images/city.jpg,What kind of setting is shown?,city
+images/forest.jpg,What kind of environment is shown?,forest
+images/beach.jpg,What landscape is beside the ocean?,beach
+images/food.jpg,What is arranged on the table?,food
+images/coffee.jpg,What beverage is shown?,coffee
+images/bicycle.jpg,What form of transport is shown?,bicycle
