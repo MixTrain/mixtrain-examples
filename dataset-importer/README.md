@@ -1,4 +1,4 @@
-# Dataset Importer
+# Dataset Importer [![Run with MixTrain](https://mixtrain.ai/assets/run-with-mixtrain.svg)](https://app.mixtrain.ai/new?from=https%3A%2F%2Fgithub.com%2FMixTrain%2Fmixtrain-examples%2Ftree%2Fmain%2Fdataset-importer&type=workflow)
 
 Import Hugging Face datasets into Mixtrain.
 
