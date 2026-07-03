@@ -1,4 +1,4 @@
-# Hello Workflow
+# Hello Workflow <a href="https://app.mixtrain.ai/new?from=https%3A%2F%2Fgithub.com%2FMixTrain%2Fmixtrain-examples%2Ftree%2Fmain%2Fhello-workflow&amp;type=workflow"><img src="https://mixtrain.ai/assets/run-with-mixtrain.svg" alt="Run with MixTrain" height="40" align="right"></a>
 
 Run a GPU-backed workflow and verify CUDA availability.
 
