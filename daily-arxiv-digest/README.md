@@ -6,15 +6,12 @@ it manually whenever you want an update.
 ## What you'll learn
 
 - How to schedule a `MixRoutine` with a cron expression
-- How routine parameters become configurable inputs
 - How scheduled and manual runs use the same routine
-- How to return a rich Markdown result
+- How to pass routine inputs and return a rich Markdown results
 
 ## Prerequisites
 
 - [mixtrain CLI installed and logged in](https://mixtrain.ai/docs/guide/quickstart)
-
-No API key or third-party Python package is required.
 
 ## Create the routine
 
@@ -23,7 +20,7 @@ mixtrain routine create daily_arxiv_digest.py --name daily-arxiv-digest
 ```
 
 By default, the routine runs at 09:00 UTC every weekday and retrieves the five
-newest papers in the `cs.LG` category.
+newest Machine Learning papers.
 
 ## Get a digest now
 
@@ -33,21 +30,19 @@ Use a manual run to generate the default digest immediately:
 mixtrain routine run daily-arxiv-digest
 ```
 
-Override the inputs to explore another category or search term:
+You can choose another category from the dropdown when running from the MixTrain UI,
+or override it from the CLI:
 
 ```bash
 mixtrain routine run daily-arxiv-digest \
-  --query 'all:"reinforcement learning"' \
+  --category 'Computer Vision and Pattern Recognition' \
+  --keywords 'vision transformer' \
+  --author 'Alexey Dosovitskiy' \
   --paper-count 3
 ```
 
-The query uses [arXiv API search syntax](https://info.arxiv.org/help/api/user-manual.html#51-details-of-query-construction).
-Other useful examples include `cat:cs.CV`, `cat:cs.CL`, and `au:"Yann LeCun"`.
+The routine looks back 24 hours and combines the inputs to find the latest papers's abstracts.
 
-## How it works
+## Learn more
 
-arXiv returns an Atom feed containing paper metadata and author-written
-abstracts. The routine orders results by submission date and formats the latest
-papers as a readable Markdown digest. It deliberately does not use an LLM: the
-abstracts already summarize the papers, keeping this introductory example fast,
-free, and dependency-free.
+- [Routine Guide](https://mixtrain.ai/docs/guide/routines)
