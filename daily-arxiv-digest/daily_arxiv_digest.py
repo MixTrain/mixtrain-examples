@@ -1,7 +1,7 @@
 """Publish a weekday digest of recent arXiv papers."""
 
 from datetime import datetime, timedelta, timezone
-from typing import Literal
+from enum import Enum
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from xml.etree import ElementTree
@@ -12,20 +12,24 @@ from mixtrain import Markdown, MixRoutine, on_schedule
 ARXIV_API = "https://export.arxiv.org/api/query"
 ATOM = {"atom": "http://www.w3.org/2005/Atom"}
 
-Category = Literal[
-    "Machine Learning",
-    "Artificial Intelligence",
-    "Computation and Language",
-    "Computer Vision and Pattern Recognition",
-    "Robotics",
-    "Neural and Evolutionary Computing",
-    "Information Retrieval",
-    "Human-Computer Interaction",
-    "Distributed, Parallel, and Cluster Computing",
-    "Software Engineering",
-    "Cryptography and Security",
-    "Data Structures and Algorithms",
-]
+
+class Category(str, Enum):
+    MACHINE_LEARNING = "cs.LG"
+    ARTIFICIAL_INTELLIGENCE = "cs.AI"
+    COMPUTATION_AND_LANGUAGE = "cs.CL"
+    COMPUTER_VISION_AND_PATTERN_RECOGNITION = "cs.CV"
+    ROBOTICS = "cs.RO"
+    NEURAL_AND_EVOLUTIONARY_COMPUTING = "cs.NE"
+    INFORMATION_RETRIEVAL = "cs.IR"
+    HUMAN_COMPUTER_INTERACTION = "cs.HC"
+    DISTRIBUTED_PARALLEL_AND_CLUSTER_COMPUTING = "cs.DC"
+    SOFTWARE_ENGINEERING = "cs.SE"
+    CRYPTOGRAPHY_AND_SECURITY = "cs.CR"
+    DATA_STRUCTURES_AND_ALGORITHMS = "cs.DS"
+
+    @property
+    def label(self) -> str:
+        return self.name.replace("_", " ").title()
 
 
 def fetch_papers(query: str, paper_count: int) -> list[dict[str, str]]:
@@ -81,16 +85,16 @@ class DailyArxivDigest(MixRoutine):
     def run(
         self,
         trigger=on_schedule(cron="0 9 * * 1-5", tz="UTC"),
-        category: Category = "Machine Learning",
+        categories: list[Category] = [Category.MACHINE_LEARNING],
         keywords: str = "",
         author: str = "",
         paper_count: int = 5,
         abstract_words: int = 60,
     ) -> Markdown:
-        """Create a digest using filters that are combined with AND.
+        """Create a digest with OR-ed categories and optional AND-ed filters.
 
         Args:
-            category: arXiv subject category.
+            categories: One or more arXiv subject categories.
             keywords: Optional words to find in any paper field.
             author: Optional author name.
             paper_count: Maximum number of papers to include.
@@ -100,22 +104,15 @@ class DailyArxivDigest(MixRoutine):
             raise ValueError("paper_count must be between 1 and 20")
         if not 20 <= abstract_words <= 200:
             raise ValueError("abstract_words must be between 20 and 200")
+        if not categories:
+            raise ValueError("select at least one category")
 
-        category_codes = {
-            "Machine Learning": "cs.LG",
-            "Artificial Intelligence": "cs.AI",
-            "Computation and Language": "cs.CL",
-            "Computer Vision and Pattern Recognition": "cs.CV",
-            "Robotics": "cs.RO",
-            "Neural and Evolutionary Computing": "cs.NE",
-            "Information Retrieval": "cs.IR",
-            "Human-Computer Interaction": "cs.HC",
-            "Distributed, Parallel, and Cluster Computing": "cs.DC",
-            "Software Engineering": "cs.SE",
-            "Cryptography and Security": "cs.CR",
-            "Data Structures and Algorithms": "cs.DS",
-        }
-        query_parts = [f"cat:{category_codes[category]}"]
+        category_query = " OR ".join(
+            f"cat:{category.value}" for category in categories
+        )
+        if len(categories) > 1:
+            category_query = f"({category_query})"
+        query_parts = [category_query]
         if keywords := keywords.strip().replace('"', ""):
             query_parts.append(f'all:"{keywords}"')
         if author := author.strip().replace('"', ""):
@@ -133,7 +130,8 @@ class DailyArxivDigest(MixRoutine):
         lines = [
             "# Daily arXiv Digest",
             "",
-            f"Category: **{category}** · Last {lookback_hours} hours",
+            f"Categories: **{', '.join(category.label for category in categories)}** "
+            f"· Last {lookback_hours} hours",
             "",
         ]
 
