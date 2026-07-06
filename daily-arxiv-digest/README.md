@@ -30,18 +30,19 @@ Use a manual run to generate the default digest immediately:
 mixtrain routine run daily-arxiv-digest
 ```
 
-You can choose another category from the dropdown when running from the MixTrain UI,
-or override it from the CLI:
+You can choose multiple categories from the MixTrain UI or pass a comma-separated
+list from the CLI:
 
 ```bash
 mixtrain routine run daily-arxiv-digest \
-  --category 'Computer Vision and Pattern Recognition' \
+  --categories 'cs.CV,cs.CL' \
   --keywords 'vision transformer' \
   --author 'Alexey Dosovitskiy' \
   --paper-count 3
 ```
 
-The routine looks back 24 hours and combines the inputs to find the latest papers's abstracts.
+The routine combines categories with `OR` and the other filters with `AND`. It
+looks back 24 hours, or 72 hours on Mondays to cover the weekend.
 
 ## Learn more
 
