@@ -18,7 +18,7 @@ result_dataset = "vqa-eval-results"
 eval_name = "continuous-vqa-eval"
 
 # Replace these with your own model names
-model_names = ["baseline-vlm", "candidate-vlm"]
+model_names = ["baseline_vlm", "candidate_vlm"]
 
 image_col = "image"
 question_col = "question"

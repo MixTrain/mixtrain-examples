@@ -1,7 +1,7 @@
 """Create the result dataset and Eval for the continuous VQA example."""
 
 import pandas as pd
-from mixtrain import Dataset, Eval, Image
+from mixtrain import Dataset, Eval, Image, MixClient
 
 from continuous_eval import (
     eval_name,
@@ -33,6 +33,13 @@ def main() -> None:
 
     if not Eval.exists(eval_name):
         Eval.from_dataset(results, name=eval_name, columns=result_columns)
+
+    prefix = MixClient().frontend_url
+
+    print("Resources:")
+    print(f"- Eval: {prefix(f'/evaluations/{eval_name}')}")
+    print(f"- Eval set: {prefix(f'/datasets/{eval_set}')}")
+    print(f"- Results dataset: {prefix(f'/datasets/{result_dataset}')}")
 
 
 if __name__ == "__main__":
