@@ -1,4 +1,4 @@
-# Continuous Multimodal Eval <a href="https://app.mixtrain.ai/new?from=https%3A%2F%2Fgithub.com%2FMixTrain%2Fmixtrain-examples%2Ftree%2Fmain%2Fcontinuous-eval&amp;type=workflow"><img src="https://mixtrain.ai/assets/run-with-mixtrain.svg" alt="Run with MixTrain" height="40" align="right"></a>
+# Continuous Multimodal Eval <a href="https://app.mixtrain.ai/new?from=https%3A%2F%2Fgithub.com%2FMixTrain%2Fmixtrain-examples%2Ftree%2Fmain%2Fcontinuous-eval&amp;type=routine&exclude=images**"><img src="https://mixtrain.ai/assets/run-with-mixtrain.svg" alt="Run with MixTrain" height="40" align="right"></a>
 
 Keep your vision-language models continuously scored against a *living* eval
 set. A [Routine](https://mixtrain.ai/docs/guide/routines) watches the eval set
@@ -29,28 +29,21 @@ scales with what changed — not the size of the whole eval set.
 
 ## Run it
 
-1. Create the eval dataset from the bundled CSV and its 10 example rows and local
-images. This uploads local images and creates a new dataset:
 
-    ```bash
-    mixtrain dataset create vqa-eval-set initial_eval_set.csv \
-    --description "A growing visual question-answer eval set"
-    ```
-
-2. Create the Eval. Eval is tied to a result dataset, so this will create a new empty result dataset and link it to the Eval:
+1. Create the eval dataset and Eval. Eval is tied to a result dataset, so this will create a new empty result dataset and link it to the Eval:
 
     ```bash
     python setup_eval.py
     ```
 
-3. Create the routine. Its `on_added_rows` trigger starts from the current
+2. Create the routine. Its `on_added_rows` trigger starts from the current
 `vqa-eval-set` version, so every future append will trigger the routine and score the new rows:
 
     ```bash
     mixtrain routine create . --name continuous-vqa-eval
     ```
 
-4. Append new rows to the eval dataset to simulate dataset additions and trigger the routine. This will score the new rows and append the answers to the result dataset. You can append rows from UI or programmatically using the SDK:
+3. Append new rows to the eval dataset to simulate dataset additions and trigger the routine. This will score the new rows and append the answers to the result dataset. You can append rows from UI or programmatically using the SDK:
 
     ```bash
     python add_eval_samples.py

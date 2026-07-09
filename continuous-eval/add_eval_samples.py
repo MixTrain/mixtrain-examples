@@ -1,4 +1,4 @@
-"""Add a couple of new eval examples the eval dataset."""
+"""Add a couple of new eval examples to the eval dataset."""
 
 from mixtrain import Dataset
 
