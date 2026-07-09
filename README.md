@@ -21,6 +21,7 @@ cd mixtrain-examples
 | [`parameter-sweep`](parameter-sweep/) | Launch multiple runs of another workflow by sweeping one numeric input | Intermediate | [![Run with MixTrain](https://mixtrain.ai/assets/run-with-mixtrain.svg)](https://app.mixtrain.ai/new?from=https%3A%2F%2Fgithub.com%2FMixTrain%2Fmixtrain-examples%2Ftree%2Fmain%2Fparameter-sweep&type=workflow) |
 | [`yolo-object-detection`](yolo-object-detection/) | Run YOLO11 object detection on images | Intermediate | [![Run with MixTrain](https://mixtrain.ai/assets/run-with-mixtrain.svg)](https://app.mixtrain.ai/new?from=https%3A%2F%2Fgithub.com%2FMixTrain%2Fmixtrain-examples%2Ftree%2Fmain%2Fyolo-object-detection&type=model) |
 | [`yolo-video-tracking`](yolo-video-tracking/) | Run YOLO11 object tracking on videos | Intermediate | [![Run with MixTrain](https://mixtrain.ai/assets/run-with-mixtrain.svg)](https://app.mixtrain.ai/new?from=https%3A%2F%2Fgithub.com%2FMixTrain%2Fmixtrain-examples%2Ftree%2Fmain%2Fyolo-video-tracking&type=model) |
+| [`continuous-eval`](continuous-eval/) | Auto-score VLMs whenever an eval set grows, via a dataset trigger | Intermediate | [![Run with MixTrain](https://mixtrain.ai/assets/run-with-mixtrain.svg)](https://app.mixtrain.ai/new?from=https%3A%2F%2Fgithub.com%2FMixTrain%2Fmixtrain-examples%2Ftree%2Fmain%2Fcontinuous-eval&type=routine&exclude=images**) |
 
 ## Resources
 

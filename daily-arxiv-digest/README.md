@@ -1,4 +1,4 @@
-# Daily arXiv Digest
+# Daily arXiv Digest <a href="https://app.mixtrain.ai/new?from=https%3A%2F%2Fgithub.com%2FMixTrain%2Fmixtrain-examples%2Ftree%2Fmain%2Fdaily-arxiv-digest&amp;type=workflow"><img src="https://mixtrain.ai/assets/run-with-mixtrain.svg" alt="Run with MixTrain" height="40" align="right"></a>
 
 Create a digest of recent arXiv papers every weekday morning, or run
 it manually whenever you want an update.
