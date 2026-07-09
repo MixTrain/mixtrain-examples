@@ -1,4 +1,4 @@
-# Continuous Multimodal Eval
+# Continuous Multimodal Eval <a href="https://app.mixtrain.ai/new?from=https%3A%2F%2Fgithub.com%2FMixTrain%2Fmixtrain-examples%2Ftree%2Fmain%2Fcontinuous-eval&amp;type=workflow"><img src="https://mixtrain.ai/assets/run-with-mixtrain.svg" alt="Run with MixTrain" height="40" align="right"></a>
 
 Keep your vision-language models continuously scored against a *living* eval
 set. A [Routine](https://mixtrain.ai/docs/guide/routines) watches the eval set
