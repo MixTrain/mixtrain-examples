@@ -47,25 +47,14 @@ class ContinuousVQAEval(MixRoutine):
             new_examples: Read-only Dataset containing rows appended since the last run
         """
 
-        # Get new rows since last run
-        examples = new_examples.to_pandas()
-        if examples.empty:
-            raise ValueError("The trigger did not contain any new eval examples")
-        examples = examples[input_columns]
-
-        print(f"Scoring {len(examples)} new example(s) on {model_names}")
-
-        # Run the models on the new cases in parallel
-        inputs = examples[[image_col, question_col]]
-        result = Model.batch(model_names, inputs)
-        print(f"Completed {len(result)}/{len(inputs)} examples")
-
-        # Build the results frame with one answer column per model
-        results = result.to_pandas()
-        results[ground_truth_col] = examples[ground_truth_col].to_numpy()
-        results = results[result_columns]
-
+        # Run the models on the new cases in parallel. Returns a Dataset.
+        result = Model.batch(
+            model_names, new_examples, input_columns=[image_col, question_col]
+        )
+        # Select the columns we need for eval
+        results = result.select(result_columns)
         # Append to the results dataset, eval will update automatically
+
         Dataset(result_dataset).append(results)
 
         print(f"Eval '{eval_name}' updated with {len(results)} comparison(s)")
