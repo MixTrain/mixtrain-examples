@@ -1,0 +1,21 @@
+sample_id,split,image,prompt,ground_truth
+train-cat-initial,train,images/cat.jpg,What animal is shown? Answer with one word.,cat
+train-dog-initial,train,images/dog.jpg,What animal is shown? Answer with one word.,dog
+train-horse-initial,train,images/horse.jpg,What animal is shown? Answer with one word.,horse
+train-elephant-initial,train,images/elephant.jpg,What animal is shown? Answer with one word.,elephant
+train-car-initial,train,images/car.jpg,What kind of vehicle is shown? Answer with one word.,car
+train-bus-initial,train,images/bus.jpg,What kind of vehicle is shown? Answer with one word.,bus
+train-airplane-initial,train,images/airplane.jpg,What kind of vehicle is shown? Answer with one word.,airplane
+train-boat-initial,train,images/boat.jpg,What kind of vehicle is shown? Answer with one word.,boat
+train-pizza-initial,train,images/pizza.jpg,What food is shown? Answer with one word.,pizza
+train-banana-initial,train,images/banana.jpg,What fruit is shown? Answer with one word.,banana
+train-coffee-initial,train,images/coffee.jpg,What drink is shown? Answer with one word.,coffee
+train-guitar-initial,train,images/guitar.jpg,What musical instrument is shown? Answer with one word.,guitar
+train-clock-initial,train,images/clock.jpg,What object keeps time in the picture? Answer with one word.,clock
+train-laptop-initial,train,images/laptop.jpg,What electronic device is shown? Answer with one word.,laptop
+train-food-initial,train,images/food.jpg,What is arranged on the table? Answer with one word.,food
+eval-beach-initial,eval,images/beach.jpg,What kind of place is shown? Answer with one word.,beach
+eval-forest-initial,eval,images/forest.jpg,What environment is shown? Answer with one word.,forest
+eval-flower-initial,eval,images/flower.jpg,What is shown in the picture? Answer with one word.,flower
+eval-bicycle-initial,eval,images/bicycle.jpg,What kind of vehicle is shown? Answer with one word.,bicycle
+eval-train-initial,eval,images/train.jpg,What kind of vehicle is shown? Answer with one word.,train

@@ -1,0 +1,3 @@
+sample_id,split,image,prompt,ground_truth
+train-city-new,train,images/city.jpg,What kind of setting is shown? Answer with one word.,city
+train-mountain-new,train,images/mountain.jpg,What landform is shown? Answer with one word.,mountain
