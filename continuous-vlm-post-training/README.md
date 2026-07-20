@@ -15,6 +15,12 @@ flowchart TB
     data --> routine --> train --> checkpoint --> evaluate --> results
 ```
 
+## Result 
+[Here](https://app.mixtrain.ai/s/dXOWwcZFsOIEruItpCG-1wOqAKO3TDFIAJDZBB05Q4Q) is how the overall evaluation results look like after the first training run.
+
+![Eval results](images/eval_screenshot.png)
+
+
 ## Run it
 
 You need the [Mixtrain CLI](https://mixtrain.ai/docs/guide/quickstart). The example uses
@@ -63,7 +69,8 @@ python add_examples.py data/initial_examples.csv
 
 The script adds examples from a CSV file and appends them to the `vlm-post-training-data` dataset. `Dataset.append(copy_files=True)` also takes care of resolving local image references in the CSV file and uploading them to the Mixtrain workspace.
 
-This automatically starts the continuous training loop above. And in around 2-3 minutes, you should see the training and evaluations completed with the eval results looking like [this](https://app.mixtrain.ai/s/dXOWwcZFsOIEruItpCG-1wOqAKO3TDFIAJDZBB05Q4Q).
+This automatically starts the continuous training loop above. And in around 2-3 minutes, you should see the training and evaluations completed with the eval results that looks like [this](https://app.mixtrain.ai/s/dXOWwcZFsOIEruItpCG-1wOqAKO3TDFIAJDZBB05Q4Q).
+
 
 ### Optional: add a second batch
 
