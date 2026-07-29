@@ -22,7 +22,7 @@ mixtrain workflow run hello-workflow
 Logs are streamed to the CLI and also available on the UI. The run URL will be printed on the CLI:
 
 ```
-https://app.mixtrain.ai/<workspace>/workflows/hello-workflow/runs/1
+https://app.mixtrain.ai/workflows/hello-workflow/runs/1
 ```
 
 ## Learn more

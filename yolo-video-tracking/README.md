@@ -30,7 +30,7 @@ mixtrain model run yolo-tracker \
 Logs are streamed to the CLI and also available on the UI. The run URL will be printed on the CLI:
 
 ```
-https://app.mixtrain.ai/<workspace>/models/yolo-tracker/runs/1
+https://app.mixtrain.ai/models/yolo-tracker/runs/1
 ```
 
 ## Learn more
